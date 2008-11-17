@@ -53,6 +53,16 @@ describe SolrQuery do
         .should == ""
     end
     
+    it "should ignore the keyword field if given as nil" do
+      @it.build(:keyword => nil, :something => "else") \
+        .should == "something:(else)"
+    end
+    
+    it "should ignore the keyword field if given as empty" do
+      @it.build(:keyword => "   ", :something => "else") \
+        .should == "something:(else)"
+    end
+    
     it "should let us define a string with an OR statement in" do
       @it.build(:keyword => "fire OR theft", :something => "else") \
         .should == "(fire OR theft) AND something:(else)"
