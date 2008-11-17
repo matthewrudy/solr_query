@@ -22,13 +22,13 @@ module SolrQuery
     # if you need to do range queries;
     # 
     #   SolrQuery.build(:salary => {:min => "010000", :max => "050000"})
-    #   => "salary:(010000 TO 050000)"
+    #   => "salary:([010000 TO 050000])"
     # 
     #   SolrQuery.build(:salary => "010000".."050000")
-    #   => "salary:(010000 TO 050000)"
+    #   => "salary:([010000 TO 050000])"
     # 
     #   SolrQuery.build(:surname => {:min => "jacobs")
-    #   => "surname:(jacobs TO *)"
+    #   => "surname:([jacobs TO *])"
     def build(conditions = {}, keyword_key=:keyword)
       conditions = conditions.dup # let's not accidentally kill our original params
       query_parts = []
