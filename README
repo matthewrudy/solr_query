@@ -1,0 +1,46 @@
+SolrQuery
+=========
+
+SolrQuery is a ruby library designed to make building nested Solr queries simple and standardized.
+
+It does everything for you,
+it deals with escaping characters,
+matching ActiveRecord objects by id.
+
+It'll take an array of strings,
+an array of ActiveRecords.
+
+Give it a Hash or a Range, and it'll sort out lucene range queries for you!
+
+Example
+=======
+
+build a query for solr;
+
+  SolrQuery.build(:keyword => "Feather duster")
+  #=> "feather duster"
+
+  SolrQuery.build(:keyword => "clean", :organisation => [organisation1, organisation2])
+  #=> "clean AND organisation:(275 OR 6534)"
+
+  SolrQuery.build(:colour => ["red", "pink"], :item_type => ["Toy", "Train"])
+  #=> "colour:(red OR pink) AND item_type:(Toy OR Train)"
+
+or you can specify a different magical key for keyword;
+
+  SolrQuery.build({:keyword => "old one", :new_keyword => "new one"}, :new_keyword)
+  #=> "new one AND keyword:(old one)"
+
+if you need to do range queries;
+
+  SolrQuery.build(:salary => {:min => "010000", :max => "050000"})
+  #=> "salary:(010000 TO 050000)"
+
+  SolrQuery.build(:salary => "010000".."050000")
+  #=> "salary:(010000 TO 050000)"
+
+  SolrQuery.build(:surname => {:min => "jacobs")
+  #=> "surname:(jacobs TO *)"
+
+
+Copyright (c) 2008 [Matthew Rudy Jacobs], released under the MIT license
