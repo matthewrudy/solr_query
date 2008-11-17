@@ -34,13 +34,13 @@ or you can specify a different magical key for keyword;
 if you need to do range queries;
 
   SolrQuery.build(:salary => {:min => "010000", :max => "050000"})
-  #=> "salary:(010000 TO 050000)"
+  #=> "salary:([010000 TO 050000])"
 
   SolrQuery.build(:salary => "010000".."050000")
-  #=> "salary:(010000 TO 050000)"
+  #=> "salary:([010000 TO 050000])"
 
   SolrQuery.build(:surname => {:min => "jacobs")
-  #=> "surname:(jacobs TO *)"
+  #=> "surname:([jacobs TO *])"
 
 
 Copyright (c) 2008 [Matthew Rudy Jacobs], released under the MIT license
