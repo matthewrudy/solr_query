@@ -1,3 +1,7 @@
+unless nil.respond_to?(:blank?)
+  require File.join(File.dirname(__FILE__), "blank")
+end
+
 module SolrQuery
   class << self
     # build a query for solr
@@ -29,7 +33,7 @@ module SolrQuery
       conditions = conditions.dup # let's not accidentally kill our original params
       query_parts = []
       keyword = conditions.delete(keyword_key) # keyword is magical
-      unless keyword.nil? || (keyword.respond_to?(:empty?) && keyword.empty?)
+      unless keyword.blank?
         query_parts << "#{solr_value(keyword, true)}"
       end
     
