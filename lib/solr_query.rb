@@ -103,6 +103,6 @@ module SolrQuery
     protected :escape_solr_string
   end
   
-  SOLR_ESCAPE_CHARACTERS = %w" \ + - ! ( ) : ^ ] { } ~ * ? "
+  SOLR_ESCAPE_CHARACTERS = %w" \ + - ! ( ) : ; ^ ] { } ~ * ? "
   SOLR_ESCAPE_REGEXP = Regexp.new(SOLR_ESCAPE_CHARACTERS.map{|char| Regexp.escape(char)}.join("|"))
 end
