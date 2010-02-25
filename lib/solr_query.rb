@@ -30,7 +30,7 @@ module SolrQuery
       query_parts = []
       keyword = conditions.delete(keyword_key) # keyword is magical
       if !blank?(keyword) # ie. !keyword.blank?
-        query_parts << "#{solr_value(keyword, true)}"
+        query_parts << "#{solr_value(keyword, :downcase => true)}"
       end
     
       conditions.each do |field, value|
@@ -46,13 +46,16 @@ module SolrQuery
       end
     end
   
-    def solr_value(object, downcase=false)
+    def solr_value(object, opts={})
+      downcase    = opts[:downcase]
+      dont_escape = opts[:dont_escape]
+      
       if object.is_a?(Array) # case when Array will break for has_manys
         if object.empty?
           string = "NIL" # an empty array should be equivalent to "don't match anything"
         else
           string = object.map do |element|
-            solr_value(element, downcase)
+            solr_value(element, opts.merge(:dont_escape => true))
           end.join(" OR ")
           downcase = false # don't downcase the ORs
         end
@@ -62,15 +65,17 @@ module SolrQuery
         string = object.id.to_s
       elsif object.is_a?(String)
         if downcase && (bits = object.split(" OR ")) && bits.length > 1
-          return "(#{solr_value(bits, downcase)})"
+          return "(#{solr_value(bits, opts)})"
         else
           string = object
         end
       else
         string = object.to_s
       end
-      string.downcase! if downcase
-      return escape_solr_string(string)
+      string.downcase!                    if downcase 
+      string = escape_solr_string(string) unless dont_escape
+      
+      string
     end
     protected :solr_value
     
@@ -109,6 +114,6 @@ module SolrQuery
         
   end
   
-  SOLR_ESCAPE_CHARACTERS = %w" \ + - ! ( ) : ; ^ [ ] { } ~ * ? "
+  SOLR_ESCAPE_CHARACTERS = %w" \\ + - ! ( ) : ; ^ [ ] { } ~ * ? "
   SOLR_ESCAPE_REGEXP = Regexp.new(SOLR_ESCAPE_CHARACTERS.map{|char| Regexp.escape(char)}.join("|"))
 end

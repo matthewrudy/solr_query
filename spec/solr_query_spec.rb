@@ -13,6 +13,9 @@ describe SolrQuery do
     before(:each) do
       @record = Organisation.new(45)
       @it = SolrQuery
+      
+      @backslash = '\\'
+      @escaped_backslash = @backslash*2 # backslashes are difficult to work with
     end
     
     it "should leave multi-word keywords intact" do
@@ -80,11 +83,21 @@ describe SolrQuery do
       @it.build(:nilly => nil, :nully => nil, :keyword => nil).should == ""
     end
     
+    it 'should escape any \ ' do
+      @it.build(:keyword => @backslash+" yeah"+@backslash+' '+@backslash+'    ', :something => 'a '+@backslash+'ey'+@backslash) \
+        .should == @escaped_backslash+' yeah'+@escaped_backslash+' '+@escaped_backslash+' AND something:(a '+@escaped_backslash+'ey'+@escaped_backslash+')'
+    end
+    
     # this is a magical set of specs, that may be fragile - so we'll do a less magic version in a mo
-    SolrQuery::SOLR_ESCAPE_CHARACTERS.each do |char|
+    [ '+', '-', '!', '(', ')', ':', ';', '^', '[', ']', '{', '}', '~', '*', '?' ].each do |char|
       it "should escape any #{char}" do
         @it.build(:keyword => "#{char} yeah#{char} #{char}   ", :something => "a #{char}ey#{char}").should == "\\#{char} yeah\\#{char} \\#{char} AND something:(a \\#{char}ey\\#{char})"
       end
+    end
+    
+    it 'should escape values in an array correctly' do
+      @it.build(:id => ['User:1', 'User:2']) \
+        .should == 'id:(User\:1 OR User\:2)'
     end
     
     it "should avoid matching anything if given an empty array as a value" do
