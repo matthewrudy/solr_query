@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{solr_query}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Matthew Rudy"]
@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = %q{Build SOLR queries, properly escaped, with a nice API}
   s.email = %q{matthewrudyjacobs@gmail.com}
   s.extra_rdoc_files = ["README"]
-  s.files = ["MIT-LICENSE", "Rakefile", "README", "spec", "lib/blank.rb", "lib/solr_query.rb"]
+  s.files = ["MIT-LICENSE", "Rakefile", "README", "spec", "lib/solr_query.rb"]
   s.homepage = %q{http://github.com/matthewrudy/solr_query}
   s.rdoc_options = ["--main", "README"]
   s.require_paths = ["lib"]

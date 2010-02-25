@@ -1,7 +1,3 @@
-unless nil.respond_to?(:blank?)
-  require File.join(File.dirname(__FILE__), "blank")
-end
-
 module SolrQuery
   class << self
     # build a query for solr
@@ -33,7 +29,7 @@ module SolrQuery
       conditions = conditions.dup # let's not accidentally kill our original params
       query_parts = []
       keyword = conditions.delete(keyword_key) # keyword is magical
-      unless keyword.blank?
+      if !blank?(keyword) # ie. !keyword.blank?
         query_parts << "#{solr_value(keyword, true)}"
       end
     
@@ -101,6 +97,16 @@ module SolrQuery
       string.gsub(SOLR_ESCAPE_REGEXP, "\\\\\\0").strip
     end
     protected :escape_solr_string
+    
+    def blank?(object) #:nodoc: quick rehash of rails' object.blank?
+      if object.is_a?(String)
+        object !~ /\S/
+      else
+        object.respond_to?(:empty?) ? object.empty? : !object
+      end
+    end
+    protected :blank?
+        
   end
   
   SOLR_ESCAPE_CHARACTERS = %w" \ + - ! ( ) : ; ^ [ ] { } ~ * ? "
