@@ -6,7 +6,7 @@ require 'rake/rdoctask'
 desc 'Default: run the specs.'
 task :default => :spec
 
-desc 'Run specs for rude_q plugin'
+desc 'Run specs for SolrQuery'
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_opts = ['--options', "\"spec/spec.opts\""]
   t.spec_files = FileList['spec/**/*_spec.rb']
