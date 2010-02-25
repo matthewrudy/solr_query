@@ -33,10 +33,10 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "solr_query"
-  s.version           = "1.0.1"
+  s.version           = "1.0.2"
   s.description       = "Build SOLR queries, properly escaped, with a nice API"
   s.summary           = "a ruby library designed to make building nested Solr queries simple and standardized. "
-  s.author            = "Matthew Rudy"
+  s.author            = "Matthew Rudy Jacobs"
   s.email             = "matthewrudyjacobs@gmail.com"
   s.homepage          = "http://github.com/matthewrudy/solr_query"
 

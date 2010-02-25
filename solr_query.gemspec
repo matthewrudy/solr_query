@@ -2,10 +2,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{solr_query}
-  s.version = "1.0.1"
+  s.version = "1.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Matthew Rudy"]
+  s.authors = ["Matthew Rudy Jacobs"]
   s.date = %q{2010-02-26}
   s.description = %q{Build SOLR queries, properly escaped, with a nice API}
   s.email = %q{matthewrudyjacobs@gmail.com}
